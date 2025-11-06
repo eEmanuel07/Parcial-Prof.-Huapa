@@ -98,3 +98,12 @@ Esta función se invoca antes de **cada operación de consulta** (listado, modif
 2. Ejecutar desde la terminal:
    ```bash
    python gestion_canciones.py
+
+------------------------------------------------------------------------------------------
+
+Desarrolladores:
+
+                 [Hernan https://github.com/mhernangonzalez32-gif]  
+                 [Elias https://github.com/eEmanuel07] 
+Materia: Programación 1
+Institución: Tecnicatura Universitaria en Programación
