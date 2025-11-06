@@ -1,0 +1,109 @@
+# Gestión Jerárquica de Canciones
+
+Sistema de persistencia y consulta de datos musicales organizado en una estructura de carpetas jerárquica de **tres niveles**, implementado en **Python 3.x** sin librerías externas.
+
+------------------------------------------------------------------------------------------
+
+## 1. Dominio y Modelo de Datos
+
+El sistema gestiona **canciones** organizadas bajo una jerarquía temática de tres niveles:
+
+1. **Género** (ej: `Rock`, `Pop`, `Electrónica`)  
+2. **Subgénero / Origen** (ej: `Nacional`, `Internacional`, `Alternativo`)  
+3. **Artista** (ej: `Soda Stereo`, `Charly García`, `The Beatles`)
+
+Cada artista tiene un archivo **`canciones.csv`** en su carpeta, que contiene una lista de canciones.  
+Cada canción se representa como un **diccionario en Python** con los siguientes atributos:
+
+|         Atributo         | Tipo  |             Descripción               |
+|--------------------------|-------|---------------------------------------|
+|        `nombre`          | `str` | Nombre de la canción                  |
+|     `duracion_seg`       | `int` | Duración en segundos (`213` para 3:33)|
+| `reproducciones_spotify` | `int` | Cantidad de reproducciones en Spotify |
+
+> ✅ Ejemplo de ruta física:  
+> `datos_musica/Rock/Nacional/Soda Stereo/canciones.csv`
+
+------------------------------------------------------------------------------------------
+
+## 📁 2. Estructura de Archivos
+
+El sistema crea automáticamente la siguiente jerarquía al ingresar una nueva canción:
+
+Continente/
+└── País/
+    └── Ciudad/
+        └── datos.csv
+
+- Solo se permite **un archivo CSV por artista**: `canciones.csv`.
+- No se permiten archivos CSV en niveles intermedios.
+- Las carpetas se crean dinámicamente si no existen.
+
+------------------------------------------------------------------------------------------
+
+## 3. Funcionalidades del Sistema
+
+El menú principal ofrece las siguientes operaciones:
+
+1. **Alta de nueva canción**  
+   - Ingresa los 3 niveles + atributos de la canción.  
+   - Crea la jerarquía de carpetas si no existe.  
+   - Guarda en `canciones.csv`.
+
+2. **Mostrar todas las canciones y filtrar por género**  
+   - Usa la **función recursiva obligatoria** para consolidar todos los datos.  
+   - Muestra la ubicación jerárquica de cada canción.  
+   - Permite filtrar por género.
+
+3. **Modificar una canción**  
+   - Identifica por: género + subgénero + artista + nombre.  
+   - Permite cambiar duración o reproducciones (con validaciones).  
+   - Sobrescribe el CSV específico.
+
+4. **Eliminar una canción**  
+   - Identificación única igual que en modificación.  
+   - Confirma antes de borrar.  
+   - Actualiza el archivo CSV correspondiente.
+
+5. **Estadísticas y ordenamiento**  
+   - **Estadísticas**:  
+     - Total de canciones  
+     - Suma y promedio de reproducciones  
+     - Cantidad de artistas por **género (nivel 1)**  
+   - **Ordenamiento**:  
+     - Por nombre (A–Z)  
+     - Por reproducciones (descendente)
+
+------------------------------------------------------------------------------------------
+
+## 4. Recursividad
+
+La función **`cargar_todos_los_datos(ruta_actual, ruta_base)`** implementa recursividad para:
+
+- **Caso base**: cuando encuentra un archivo llamado `canciones.csv`, lo lee y añade sus filas a una lista global.  
+- **Paso recursivo**: si la ruta es un directorio, llama a sí misma para cada subdirectorio.  
+- **Resultado**: una **lista de diccionarios** con todos los ítems del sistema, incluyendo sus 3 niveles jerárquicos.
+
+Esta función se invoca antes de **cada operación de consulta** (listado, modificación, eliminación, estadísticas) para garantizar que los datos estén siempre actualizados.
+
+------------------------------------------------------------------------------------------
+
+## 5. Requisitos y Ejecución
+
+- **Python 3.x** (solo librerías estándar: `os`, `csv`)
+- **Sin dependencias externas**
+
+### Instrucciones:
+1. Clonar el repositorio.
+2. Ejecutar desde la terminal:
+   ```bash
+   python gestion_canciones.py
+
+------------------------------------------------------------------------------------------
+
+Desarrolladores:
+
+                 [Hernan https://github.com/mhernangonzalez32-gif]  
+                 [Elias https://github.com/eEmanuel07] 
+Materia: Programación 1
+Institución: Tecnicatura Universitaria en Programación
